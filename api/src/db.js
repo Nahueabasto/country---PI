@@ -8,7 +8,7 @@ const {
 const modelCountry = require ('./models/Country');
 const modelActivity = require ('./models/Activity');
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/countries`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pises`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
@@ -35,8 +35,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 // const { Pokemon } = sequelize.models;
 const { Country, Activity } = sequelize.models;
 
-modelCountry(sequelize); 
-modelActivity(sequelize); 
+// modelCountry(sequelize); 
+// modelActivity(sequelize); 
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
