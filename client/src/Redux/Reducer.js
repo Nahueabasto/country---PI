@@ -1,4 +1,4 @@
-import { GET_COUNTRIES, GET_NAME_COUNTRY, FILTER_CONTINENT, FILTER_ACTIVIDADES, GET_ACTIVITIES } from "./Actions";
+import { GET_COUNTRIES, GET_NAME_COUNTRY, FILTER_CONTINENT, FILTER_ACTIVIDADES, GET_ACTIVITIES, FILTER_BY_ORDER } from "./Actions";
 
 const initialState = {
   countries: [],
@@ -47,7 +47,39 @@ function reducer(state = initialState, action) {
     countries: activityFilter
   };
 
-    
+  case FILTER_BY_ORDER:
+    if (action.payload === "az") {
+      // si el payload es az, entonces que me devuelva el estado inicial
+      return {
+        ...state,
+        countries: state.countries.sort(function (a, b) {
+          // ordena de la A a la Z
+          if (a.name > b.name) {
+            // si el nombre de a es mayor que el de b
+            return 1; // entonces que me devuelva 1 para que se ordene de la A a la Z.
+          }
+          if (b.name > a.name) {
+            // si el nombre de b es mayor que el de a
+            return -1; // tiene que devolver -1  para que se ordene de la Z a la A
+          }
+          return 0; // si son iguales lo deja como esta
+        }),
+      };
+    }
+    if (action.payload === "za") {
+      return {
+        ...state,
+        countries: state.countries.sort(function (a, b) {
+          if (a.name > b.name) {
+            return -1;
+          }
+          if (b.name > a.name) {
+            return 1;
+          }
+          return 0;
+        }),
+      };
+    }
         
     default:
       return state;
