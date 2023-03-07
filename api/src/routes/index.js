@@ -120,44 +120,73 @@ router.get('/activities', async (req, res, next) => {
 // });
 
 
-
-
-router.get("/countries/:idPais", async (req, res, next) => {
-    try {
-      const { idPais } = req.params;
-      const allCountries = await getAll();
-  
-      const country = allCountries.find((c) => c.id === idPais);
-  
-      if (!country) {
-        return res.status(404).json({ message: "País no encontrado" });
-      }
-  
-      const {
-        name,
-        image,
-        continent,
-        capital,
-        subregion,
-        area,
-        population,
-        activities,
-      } = country;
-  
-      res.json({
-        name,
-        image,
-        continent,
-        capital,
-        subregion,
-        area: `${(area / 1000000).toFixed(2)} millones de km2`,
-        population,
-        activities,
-      });
-    } catch (error) {
-      next(error);
-    }
+router.get("/countries/:idPais", async (req, res) => {
+  try {
+    const { idPais } = req.params;
+    const allCountries = await Country.findByPk(idPais, {
+    include: {
+      model: Activity,
+      attributes: ["name", "difficulty", "duration", "season"],
+      through: {
+        attributes: [],
+      },
+    },
+    attributes: [
+      "image",
+      "name",
+      "continent",
+      "id",
+      "capital",
+      "subregion",
+      "area",
+      "population",
+    ],
   });
+  if(allCountries) return res.json(allCountries)
+  throw new Error("País no encontrado");
+  } catch (e) {
+    res.status(404).json("Country not found. Try again.");
+  }
+});
+
+
+// router.get("/countries/:id", async (req, res, next) => {
+//     try {
+//       const { id } = req.params;
+//       const allCountries = await getAll();
+  
+//       const country = allCountries.find((c) => c.id === id);
+  
+//       if (!country) {
+//         return res.status(404).json({ message: "País no encontrado" });
+//       }
+  
+//       const {
+//         name,
+//         image,
+//         continent,
+//         capital,
+//         subregion,
+//         area,
+//         population,
+//         activities,
+//       } = country;
+  
+//       res.json({
+//         id,
+//         name,
+//         image,
+//         continent,
+//         capital,
+//         subregion,
+//         area: `${(area / 1000000).toFixed(2)} millones de km2`,
+//         population,
+//         activities,
+//       });
+//     } catch (error) {
+//       next(error);
+//     }
+//   });
 
 
   router.post('/activities', async (req, res) => {

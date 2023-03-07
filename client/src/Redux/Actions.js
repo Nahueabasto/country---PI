@@ -5,6 +5,8 @@ export const FILTER_CONTINENT = 'FILTER_CONTINENT';
 export const FILTER_ACTIVIDADES = 'FILTER_ACTIVIDADES';
 export const GET_ACTIVITIES = 'GET_ACTIVITIES';
 export const FILTER_BY_ORDER = 'FILTER_BY_ORDER';
+export const FILTER_BY_SORT = 'FILTER_BY_SORT';
+export const DETAILS = 'DETAILS';
 
 export function getCountries(){
     return async function(dispatch){
@@ -59,3 +61,24 @@ export function filterByOrder(payload){
         payload,
     }
 }
+
+export function filterBySort(payload){
+    return {
+        type: FILTER_BY_SORT,
+        payload,
+    }
+}
+
+export function getDetail(id){
+    return async function(dispatch) {
+        try {
+            const res = await axios.get(`http://localhost:3001/countries/${id}`);
+            return dispatch({
+                type: DETAILS,
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
