@@ -6,6 +6,7 @@ const initialState = {
   filteredCountries: [],
   activities: [],
   datails: [],
+  activitiesByCountryId: [],
 }
 
 function reducer(state = initialState, action) {
@@ -21,6 +22,7 @@ function reducer(state = initialState, action) {
         ...state,
         activities: action.payload,
       };
+
     case GET_NAME_COUNTRY:
       return {
         ...state,

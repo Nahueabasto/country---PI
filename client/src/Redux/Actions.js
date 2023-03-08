@@ -48,6 +48,7 @@ export function getActivities() {
     };
   }
 
+
 export function filterActividades(payload) {
     return {
         type: FILTER_ACTIVIDADES,
@@ -68,7 +69,7 @@ export function filterBySort(payload){
         payload,
     }
 }
-
+  
 export function getDetail(id){
     return async function(dispatch) {
         try {
@@ -82,3 +83,7 @@ export function getDetail(id){
         };
     };
 };
+
+
+
+
