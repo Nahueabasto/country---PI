@@ -1,4 +1,4 @@
-import { GET_COUNTRIES, GET_NAME_COUNTRY, FILTER_CONTINENT, FILTER_ACTIVIDADES, GET_ACTIVITIES, FILTER_BY_ORDER, FILTER_BY_SORT, DETAILS } from "./Actions";
+import { GET_COUNTRIES, GET_NAME_COUNTRY, FILTER_CONTINENT, FILTER_ACTIVIDADES, GET_ACTIVITIES, FILTER_BY_ORDER, FILTER_BY_SORT, DETAILS, POST_ACTIVITIES } from "./Actions";
 
 const initialState = {
   countries: [],
@@ -6,7 +6,6 @@ const initialState = {
   filteredCountries: [],
   activities: [],
   datails: [],
-  activitiesByCountryId: [],
 }
 
 function reducer(state = initialState, action) {
@@ -34,6 +33,10 @@ function reducer(state = initialState, action) {
           ...state,
           datails: action.payload,
         }
+        case POST_ACTIVITIES:
+        return {
+          ...state,
+        }
 
     case FILTER_CONTINENT:
       const allContinent = state.filtered;
@@ -42,6 +45,7 @@ function reducer(state = initialState, action) {
         ...state,
         countries: continentFilter
       };
+      
     case FILTER_ACTIVIDADES:
       const allCountries = state.filtered;
       const activityFilter = action.payload === "All" ? allCountries : allCountries.filter(country => {

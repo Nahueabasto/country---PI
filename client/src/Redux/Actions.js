@@ -7,6 +7,7 @@ export const GET_ACTIVITIES = 'GET_ACTIVITIES';
 export const FILTER_BY_ORDER = 'FILTER_BY_ORDER';
 export const FILTER_BY_SORT = 'FILTER_BY_SORT';
 export const DETAILS = 'DETAILS';
+export const POST_ACTIVITIES = 'POST_ACTIVITIES';
 
 export function getCountries(){
     return async function(dispatch){
@@ -84,6 +85,18 @@ export function getDetail(id){
     };
 };
 
+export function postActivities(payload){
+    return async function(dispatch){
+        try{
+        await axios.post('http://localhost:3001/activities', payload)
+        return dispatch({
+            type: POST_ACTIVITIES,
+              });
+         } catch (error) {
+       alert("Post failed");
+         }
+     };
+    }
 
 
 
