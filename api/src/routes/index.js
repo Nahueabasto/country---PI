@@ -55,7 +55,6 @@ const getAll = async () => {
 
 
 
-
 //http://localhost:3001/countries?name=Mayotte
 router.get('/countries', async (req, res, next) => {
   const { name } = req.query;
@@ -80,7 +79,7 @@ router.get('/countries', async (req, res, next) => {
   }
 });
 
-//////
+
 router.get('/activities', async (req, res, next) => {
   try {
     const activities = await Activity.findAll();
@@ -89,35 +88,6 @@ router.get('/activities', async (req, res, next) => {
     next(error);
   }
 });
-
-// router.get('/countries', async (req, res, next) => {
-//   const { name } = req.query;
-//   try {
-//     const countries = await Country.findAll({
-//       include: Activity
-//     });
-
-//     const result = name
-//       ? countries.filter((country) =>
-//           country.name.toString().toLowerCase().includes(name.toLowerCase())
-//         )
-//       : countries;
-
-//     if (result.length === 0) {
-//       res.status(404).send('No se encontraron países con ese nombre.');
-//     } else {
-//       // Aquí es donde modificamos la respuesta para no devolver un arreglo
-//       const response = result.map(country => {
-//         const { id, name, capital, population, Activities } = country;
-//         const activities = Activities.map(activity => activity.toJSON());
-//         return { id, name, capital, population, activities };
-//       });
-//       res.json(response);
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 
 
 router.get("/countries/:idPais", async (req, res) => {
@@ -150,44 +120,6 @@ router.get("/countries/:idPais", async (req, res) => {
 });
 
 
-// router.get("/countries/:id", async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       const allCountries = await getAll();
-  
-//       const country = allCountries.find((c) => c.id === id);
-  
-//       if (!country) {
-//         return res.status(404).json({ message: "País no encontrado" });
-//       }
-  
-//       const {
-//         name,
-//         image,
-//         continent,
-//         capital,
-//         subregion,
-//         area,
-//         population,
-//         activities,
-//       } = country;
-  
-//       res.json({
-//         id,
-//         name,
-//         image,
-//         continent,
-//         capital,
-//         subregion,
-//         area: `${(area / 1000000).toFixed(2)} millones de km2`,
-//         population,
-//         activities,
-//       });
-//     } catch (error) {
-//       next(error);
-//     }
-//   });
-
 
   router.post('/activities', async (req, res) => {
     const { name, difficulty, duration, season, countries } = req.body;
@@ -201,7 +133,7 @@ router.get("/countries/:idPais", async (req, res) => {
     }
     const countriesList = await Country.findAll({
       where: {
-        id: countries
+        name: countries
       }
     });
     await newActivity.addCountries(countriesList);
@@ -213,8 +145,6 @@ router.get("/countries/:idPais", async (req, res) => {
 });
   
 
-  
-  
 
 module.exports = router;
 

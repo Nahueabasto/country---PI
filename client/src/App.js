@@ -3,6 +3,7 @@ import './App.css';
 import LandingPage from './component/Landing.Page';
 import Home from './component/Home';
 import Detail from './component/Detail';
+import Form from './component/Form';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route exact path="/" component={LandingPage}/>
       <Route exact path ="/home" component={Home} />
       <Route exact path="/countries/:id" component={Detail} />
+      <Route exact path="/home/form" component={Form} />
     </Switch>
     </div>
   </BrowserRouter>

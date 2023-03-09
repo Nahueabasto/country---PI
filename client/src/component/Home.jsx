@@ -87,6 +87,9 @@ export default function Home() {
         Volver a cargar Countries
       </button>
       <div>
+        <Link to="/home/form">Crear Actividades Para lo Pises</Link>
+      </div>
+      <div>
         <SearchBar />
       </div>
 
