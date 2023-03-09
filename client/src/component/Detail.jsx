@@ -27,6 +27,7 @@ export default function Detail(props) {
       {details && (
         <div style={{ flex: 1 }}>
           <img className="card-img" src={details.image} alt="Not found" />
+          <p>Name: {details.name}</p>
           <p>Código de país: {details.id}</p>
           <p>Continente: {details.continent}</p>
           <p>Capital: {details.capital}</p>
