@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDetail, getActivities } from "../Redux/Actions";
 import "./Detail.css";
 
-export default function Detail(props) {
-  const { id } = props.match.params;
+export default function CountryDetails({id}) {
+ // const { id } = props.match.params;
 
   const dispatch = useDispatch();
   const details = useSelector((state) => state.datails);
   const activities = useSelector((state) => state.activities);
   console.log(activities)
 
-  const [selectedActivity, setSelectedActivity] = useState(null);
+  const [selectedActivity, setSelectedActivity] = useState("");
 
   useEffect(() => {
     dispatch(getDetail(id));
@@ -22,7 +22,7 @@ export default function Detail(props) {
     setSelectedActivity(event.target.value);
   };
 
-  return (
+  return ( 
     <div className="card" style={{ display: "flex" }}>
       {details && (
         <div style={{ flex: 1 }}>
@@ -54,7 +54,7 @@ export default function Detail(props) {
               .map((el) => (
                 <div key={el.id}>
                   <p>Dificultad: {el.difficulty}</p>
-                  <p>Duración: {el.duration}</p>
+                  <p>Duración (Horas): {el.duration}</p>
                   <p>Temporada: {el.season}</p>
                 </div>
               ))}
@@ -65,6 +65,61 @@ export default function Detail(props) {
   );
 }
 
+// import React from 'react';
+// import { Link } from 'react-router-dom';
+// import { useState, useEffect} from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { getDetail, getActivities } from "../Redux/Actions";
+
+
+// export default function CountryDetails({id}){
+
+//     const thisCountry = useSelector((state) => state.datails);
+
+//     const dispatch = useDispatch();
+
+//     useEffect( () => { //trae los countries de nuevo cada vez que renderiza o que hay un cambio.
+//         dispatch(getDetail(id));
+//     },[dispatch, id]);
+
+
+//     return (
+//     <div>
+//         <h1>{thisCountry.name}</h1>
+//         <h4>Capital:</h4>
+//         <p> {thisCountry.capital}</p>
+//         <h4>Flag:</h4>
+//         <p> <img src={thisCountry.image} alt={thisCountry.name}/></p>
+//         <h4>Continent:</h4>
+//         <p>{thisCountry.continent}</p>
+//         <h4>Subregion:</h4>
+//         <p> {thisCountry.subregion}</p>
+//         <h4>Total area:</h4>
+//         <p> {thisCountry.area}</p>
+//         <h4>Population:</h4>
+//         <p> {thisCountry.population}</p>
+//         <h4>Activities:</h4>
+// {/*        <h5> {thisCountry.activities.name}</h5>
+//         <h5> {thisCountry.activities.difficulty}</h5>
+//         <h5> {thisCountry.activities.duration}</h5>
+//     <h5> {thisCountry.activities.season}</h5>*/}
+//     <div>{thisCountry.activities?.map(a => (
+//                         <div>
+//                            <h5>Activity:</h5> 
+//                            <p>{a.name}</p>
+//                            <h5>Difficulty: </h5>
+//                            <p>{a.difficulty} </p>
+//                            <p>(1 super easy - 2 easy - 3 medium - 4 hard - 5 extremely hard)</p>
+//                             <h5>Duration:</h5> 
+//                             <p>{a.duration} hours</p>
+//                             <h5>Season</h5>
+//                             <p>{a.season}</p>
+//                         </div>
+//                         ))}
+//                         </div>
+//     </div>
+//     )
+// }
 
 
 
