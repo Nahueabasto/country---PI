@@ -147,4 +147,3 @@ router.get("/countries/:idPais", async (req, res) => {
 
 
 module.exports = router;
-

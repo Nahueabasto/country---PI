@@ -39,7 +39,8 @@ export default function Form(){
     const dispatch = useDispatch();
     const history = useHistory();
     const allCountries = useSelector((state) => state.countries);
-    //const activities = useSelector((state) => state.activities);
+    
+    const [selectedCountries, setSelectedCountries] = useState([]);
 
     const [errors, setErrors] = useState({ });
 
@@ -66,77 +67,40 @@ export default function Form(){
         })
         )
     }
-
-    function handleSelect(e){
-        setInput({
-            ...input,
-            countries: [
-                ...input.countries,
-                e.target.value
-            ]
-        });
-    };
-
-    // function handleCountries (e) {
-    //     if (
-    //       !input.countries.includes(
-    //         allCountries.find((item) => item.name === e.target.value)
-    //       )
-    //     ) {
-    //       input.countries.push(
-    //         allCountries.find((item) => item.name === e.target.value)
-    //       );
-    //     }
-    //     setErrors( //seteame mi estado errores, pasandole la funcion validate que hice arriba, con el estado completed y el [e.target.name]: en el e.target.value,
-    //       validate({
-    //         ...input,
-    //         [e.target.name]: e.target.value,
-    //       })
-    //     );
-    //   };
-    
-      
-
-    // function handleSubmit(e){
-    //     e.preventDefault();
-    //     dispatch(postActivities(input))
-    //     alert("Activity create!")
-    //     setInput({
-    //         name: '', 
-    //         difficulty: '', 
-    //         duration: '', 
-    //         season: '', 
-    //         countries: []
-    //     });
-    //     history.push('/home')
-    // };
-
+ 
     function handleSubmit(e){
         e.preventDefault();
         console.log(input);
         dispatch(postActivities(input));
         alert("Actividad creada!");
-        setInput({ //limpio los campos
+        setInput({ 
             name: '',
             difficulty: '',
             duration: '',
             season: '',
             countries: []
         })
-        history.push('/home'); //esto lo que hace es redirigirte al home después de crear la activity.
+        history.push('/home'); 
     
     }
 
-    function handleDelete(name) {
-        setInput({ //seteo el completed 
-          ...input, //el completed que tiene todo y no quiero que se vaya
-          countries: input.countries.filter((item) => item.name !== name), //a temperaments le digo, filtramelo por todo lo que no sea ese elemento. Va a agarrar y me va a devolver el estado nuevo sin ese elemento que yo clickee
-        });
+    //Luuu! a partir de aca es lo que modifique ultimo, mas el estado local que agregue arriba!! :D
+    // Y obviamente los cambios que hice en el return a partir de la linea 146
+    const handleSelect = (e) => {
+      const value = e.target.value;
+      if (!selectedCountries.includes(value)) {
+        setSelectedCountries([...selectedCountries, value]);
       }
+    };
 
+    const handleDelete = (name) => {
+      setSelectedCountries(selectedCountries.filter((el) => el !== name));
+    };
+
+    const filteredCountries = allCountries.filter((el) =>
+    selectedCountries.includes(el.name)
+  );
     
-      
-
     return(
         <div>
             <Link to='/home'>
@@ -187,10 +151,10 @@ export default function Form(){
                     </select>
                 </div>
                 <div >
-              {input.countries?.map((item) => ( //el estado local completed va a tener todos los temperaments //la funcion handleDelete va borrar el elemento que este clicleando
-                <div key={item.id}>
-                  {item.name}{" "}
-                  <button onClick={() => handleDelete(item.name)}>x</button>
+              {filteredCountries?.map((el) => (
+                <div key={el.id}>
+                  {el.name}{" "}
+                  <button onClick={() => handleDelete(el.name)}>x</button>
                 </div>
                  ))}
                  </div>
