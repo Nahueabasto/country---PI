@@ -1,3 +1,13 @@
+
+//pusheo siendo las 00:30: 
+// Descubri el error que tenia de porque no me hacia el post de country. En la funcion handleSubmit le estaba haciendo un post solo actividades porque le habia creado a cuntries un estado con nombre diferente, bueno solucionado esto te cuento que:
+
+//Le agregue en linea 164 esto: <div> {input.countries?.map(el => el + ", ")} que lo que hace es renderizar bien los countries seleccionados. Pero no me dejo agregarle un delete, probe de mil formas, y ademas si cambiaba esta parte: (el => el + ", ")} no me las renderizaba. Asi que bueno las muestra pero no las elimina, es lo unico que faltaria, te lo dejo si lo podes hacer, ah y te deje comentado una funcion delete para que mas o menos te quede como deberia ser!. :D
+// Probe hacer varios post de la forma que esta el codigo ahora y anda bien, ya sea agregando uno o varios paises crea la actividad y me la relaciona con las tablas. :D
+
+// Mañana seguramente vas a estar a la mañana, yo por otro lado voy a ver la serie y mañana voy a descansar hasta tarde..
+// Si por casualidad llega a ver este codigo alguien mas se va a cagar de risa jajaja
+
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { postActivities, getCountries, getActivities } from "../Redux/Actions";
@@ -40,7 +50,7 @@ export default function Form(){
     const history = useHistory();
     const allCountries = useSelector((state) => state.countries);
     
-    const [selectedCountries, setSelectedCountries] = useState([]);
+    //const [selectedCountries, setSelectedCountries] = useState([]);
 
     const [errors, setErrors] = useState({ });
 
@@ -84,22 +94,23 @@ export default function Form(){
     
     }
 
-    //Luuu! a partir de aca es lo que modifique ultimo, mas el estado local que agregue arriba!! :D
-    // Y obviamente los cambios que hice en el return a partir de la linea 146
-    const handleSelect = (e) => {
-      const value = e.target.value;
-      if (!selectedCountries.includes(value)) {
-        setSelectedCountries([...selectedCountries, value]);
-      }
-    };
+    function handleSelect(e) {
+      setInput({
+          ...input,
+          countries: [
+              ...input.countries,
+              e.target.value
+          ]
+      });
+  };
 
-    const handleDelete = (name) => {
-      setSelectedCountries(selectedCountries.filter((el) => el !== name));
-    };
 
-    const filteredCountries = allCountries.filter((el) =>
-    selectedCountries.includes(el.name)
-  );
+    // function handleDelete(name) {
+    //   setInput({
+    //     ...input,
+    //     countries: input.countries.filter((el) => el.name !== el.name),
+    //   });
+    // }
     
     return(
         <div>
@@ -150,17 +161,14 @@ export default function Form(){
                         }
                     </select>
                 </div>
-                <div >
-              {filteredCountries?.map((el) => (
-                <div key={el.id}>
-                  {el.name}{" "}
-                  <button onClick={() => handleDelete(el.name)}>x</button>
-                </div>
-                 ))}
+                <div> {input.countries?.map(el => el + ", ")} 
                  </div>
-
                 <button type='submit'>Crear Actvidad</button>
             </form>
         </div>
     )
 }
+
+ /* <div> {input.countries?.map(el => el + ", ")} <button onClick={() => handleDelete(el.name)}>x</button>
+                
+                 </div> */
