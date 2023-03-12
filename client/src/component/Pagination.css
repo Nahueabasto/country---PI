@@ -22,3 +22,11 @@
   .pagination li a:hover {
     background-color: #f4f4f4;
   }
+
+  .pagination-number {
+    color: rgb(130, 130, 214);
+    font-size: 18px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  

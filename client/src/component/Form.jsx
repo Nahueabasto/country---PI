@@ -1,17 +1,8 @@
-
-//pusheo siendo las 00:30: 
-// Descubri el error que tenia de porque no me hacia el post de country. En la funcion handleSubmit le estaba haciendo un post solo actividades porque le habia creado a cuntries un estado con nombre diferente, bueno solucionado esto te cuento que:
-
-//Le agregue en linea 164 esto: <div> {input.countries?.map(el => el + ", ")} que lo que hace es renderizar bien los countries seleccionados. Pero no me dejo agregarle un delete, probe de mil formas, y ademas si cambiaba esta parte: (el => el + ", ")} no me las renderizaba. Asi que bueno las muestra pero no las elimina, es lo unico que faltaria, te lo dejo si lo podes hacer, ah y te deje comentado una funcion delete para que mas o menos te quede como deberia ser!. :D
-// Probe hacer varios post de la forma que esta el codigo ahora y anda bien, ya sea agregando uno o varios paises crea la actividad y me la relaciona con las tablas. :D
-
-// Mañana seguramente vas a estar a la mañana, yo por otro lado voy a ver la serie y mañana voy a descansar hasta tarde..
-// Si por casualidad llega a ver este codigo alguien mas se va a cagar de risa jajaja
-
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { postActivities, getCountries, getActivities } from "../Redux/Actions";
 import { useDispatch, useSelector } from 'react-redux';
+import "./Form.css"
 
 
 function validate(input) {
@@ -104,19 +95,22 @@ export default function Form(){
       });
   };
 
-
-    // function handleDelete(name) {
-    //   setInput({
-    //     ...input,
-    //     countries: input.countries.filter((el) => el.name !== el.name),
-    //   });
-    // }
+  function handleDelete(e, el) {
+    e.preventDefault();
+    setInput({
+      ...input,
+      countries: input.countries.filter(item => item !== el)
+    });
+  };
     
     return(
-        <div>
+      
+      <div className="backgroundForm">
+        <div className="form-container" style={{ marginTop: '0px' }}>
             <Link to='/home'>
                 <button>Volver</button>
             </Link>
+        
             <h1>Crear Actividad Turistica</h1>
             <form onSubmit={e => {handleSubmit(e)}}>
                 <div>
@@ -127,14 +121,14 @@ export default function Form(){
                     {errors.name && <p>{errors.name}</p>}
                 </div>
                 <div>
-                    <label>difficulty:</label>
+                    <label>Difficulty:</label>
                     <input type="number" value={input.difficulty} name='difficulty' 
                     onChange={e => handleChange(e)}>
                     </input>
                     {errors.difficulty && <p>{errors.difficulty}</p>}
                 </div>
                 <div>
-                    <label>duration:</label>
+                    <label>Duration:</label>
                     <input type='number' value={input.duration} name='duration'
                      onChange={e => handleChange(e)}>  
                     </input>
@@ -142,8 +136,9 @@ export default function Form(){
                     {errors.duration && <p>{errors.duration}</p>}
                 </div>
                 <div>
-            <label>season:</label>
+            <label>Season:</label>
                <select value={input.season} name='season' onChange={e => handleChange(e)}>
+               <option value="" disabled defaultValue> </option>
                  <option value="Summer">Summer</option>
                    <option value="Fall">Fall</option>
                    <option value="Winter">Winter</option>
@@ -153,22 +148,31 @@ export default function Form(){
                 </div>
 
                 <div>
-                    <label>country:</label>
+                    <label>Countries:</label>
                     <select name='countries' onChange={e => handleSelect(e)}>
+                    <option value="" disabled selected> Countries </option>
                         {allCountries.map(el => (
                             <option key={el.id} value={el.name}>{el.name}</option>
                         ))
                         }
                     </select>
                 </div>
-                <div> {input.countries?.map(el => el + ", ")} 
-                 </div>
+                <div> {input.countries?.map(el => (
+                  <span key={el.id}>
+                   <p> {el}</p>
+                   <button onClick={(e) => handleDelete(e, el)}>x</button>
+                  </span>
+                ))}
+                    </div>
+                    <div>
                 <button type='submit'>Crear Actvidad</button>
+                </div>
+                   
             </form>
+        </div>
         </div>
     )
 }
 
- /* <div> {input.countries?.map(el => el + ", ")} <button onClick={() => handleDelete(el.name)}>x</button>
-                
-                 </div> */
+
+ 

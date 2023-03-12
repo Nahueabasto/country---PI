@@ -1,0 +1,23 @@
+.backgroundForm {
+    background-image: url('../Fotos/descarga.png');
+    padding: 2% 1% 14% 1%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-size: cover; 
+    background-position: center;
+    background-attachment:fixed;
+    height: 100vh;
+  }
+  
+  
+  .form-container {
+    margin-top: 0px;
+  }
+  
+  
+  
+  
+  
+  
+  

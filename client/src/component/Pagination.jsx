@@ -12,11 +12,9 @@ export default function Paginado({ countriesPerPage, allCountries, paginate }) {
     <nav>
       <ul className="pagination">
         {pageNumbers.map((number) => (
-          <li key={number} className="page-item">
-            <button onClick={() => paginate(number)} className="page-link">
-              {number}
-            </button>
-          </li>
+          <span key={number} className="pagination-number" onClick={() => paginate(number)}>
+          {number}
+        </span>
         ))}
       </ul>
     </nav>
