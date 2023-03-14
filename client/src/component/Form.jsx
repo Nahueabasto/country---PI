@@ -102,33 +102,42 @@ export default function Form(){
       countries: input.countries.filter(item => item !== el)
     });
   };
+
+  const orderedCountries = allCountries.sort(function(a, b){
+    if(a.name > b.name){
+      return 1;
+    }
+    if(b.name > a.name){
+      return - 1
+    }
+    return 0;
+  });
     
     return(
       
       <div className="backgroundForm">
-        <div className="form-container" style={{ marginTop: '0px' }}>
+        <div className="form-container">
             <Link to='/home'>
                 <button>Volver</button>
             </Link>
-        
-            <h1>Crear Actividad Turistica</h1>
+            <h1 className="actividad">Crea Actividad Turistica</h1>
             <form onSubmit={e => {handleSubmit(e)}}>
                 <div>
-                    <label>Name:</label>
+                    <label className="name">Name:</label>
                     <input type="text" value={input.name} name='name' 
                     onChange={e => handleChange(e)}>
                     </input>
                     {errors.name && <p>{errors.name}</p>}
                 </div>
                 <div>
-                    <label>Difficulty:</label>
+                    <label className="difficulty">Difficulty:</label>
                     <input type="number" value={input.difficulty} name='difficulty' 
                     onChange={e => handleChange(e)}>
                     </input>
                     {errors.difficulty && <p>{errors.difficulty}</p>}
                 </div>
                 <div>
-                    <label>Duration:</label>
+                    <label className="duration">Duration:</label>
                     <input type='number' value={input.duration} name='duration'
                      onChange={e => handleChange(e)}>  
                     </input>
@@ -136,7 +145,7 @@ export default function Form(){
                     {errors.duration && <p>{errors.duration}</p>}
                 </div>
                 <div>
-            <label>Season:</label>
+            <label className="season">Season:</label>
                <select value={input.season} name='season' onChange={e => handleChange(e)}>
                <option value="" disabled defaultValue> </option>
                  <option value="Summer">Summer</option>
@@ -148,7 +157,7 @@ export default function Form(){
                 </div>
 
                 <div>
-                    <label>Countries:</label>
+                    <label className="countries">Countries:</label>
                     <select name='countries' onChange={e => handleSelect(e)}>
                     <option value="" disabled selected> Countries </option>
                         {allCountries.map(el => (

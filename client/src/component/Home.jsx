@@ -28,6 +28,7 @@ export default function Home() {
     dispatch(getActivities())
   }, [dispatch]);
 
+  //En la funcion agrego los estados locales de los select para que cuando uno pongo "volver a cargar todos los cuntries" no quede el nombre previamente seleccionado
   function handleClick(e) {
     e.preventDefault();
     dispatch(getCountries());
